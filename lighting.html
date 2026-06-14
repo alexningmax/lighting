@@ -1,1349 +1,643 @@
-<html><body><meta charset="utf-8"><p></p><div align="left">
- <span style="font-size:16">&lt;!DOCTYPE&nbsp;html&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;html&nbsp;lang="zh-CN"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;head&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;meta&nbsp;charset="UTF-8"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;meta&nbsp;name="viewport"&nbsp;content="width=device-width,&nbsp;initial-scale=1.0,&nbsp;maximum-scale=1.0,&nbsp;user-scalable=no,&nbsp;viewport-fit=cover"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;title&gt;智能雷暴测距仪&nbsp;|&nbsp;摄像头测光+麦克风收音自动测距&lt;/title&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;style&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; *&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin:&nbsp;0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:&nbsp;0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; box-sizing:&nbsp;border-box;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; user-select:&nbsp;none;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; -webkit-tap-highlight-color:&nbsp;transparent;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; body&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:&nbsp;linear-gradient(145deg,&nbsp;#1a2a3a&nbsp;0%,&nbsp;#0f1a24&nbsp;100%);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; min-height:&nbsp;100vh;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; display:&nbsp;flex;</span>
-</div><div align="left">
- <span style="font-size:16"> &nbsp;flex-direction:&nbsp;column;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;新增这一行&nbsp;*/</span>
-</div><div align="left">
- <span style="font-size:16"> &nbsp;align-items:&nbsp;center;&nbsp;</span>
-</div><br><div align="left">
- <span style="font-size:16">&nbsp; font-family:&nbsp;system-ui,&nbsp;-apple-system,&nbsp;Roboto,&nbsp;sans-serif;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:&nbsp;15px&nbsp;12px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .card&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:&nbsp;100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; max-width:&nbsp;620px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:&nbsp;rgba(255,&nbsp;255,&nbsp;255,&nbsp;0.1);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; backdrop-filter:&nbsp;blur(12px);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-radius:&nbsp;48px&nbsp;36px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; box-shadow:&nbsp;0&nbsp;20px&nbsp;35px&nbsp;rgba(0,&nbsp;0,&nbsp;0,&nbsp;0.3);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:&nbsp;22px&nbsp;16px&nbsp;30px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border:&nbsp;1px&nbsp;solid&nbsp;rgba(255,&nbsp;255,&nbsp;255,&nbsp;0.25);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .header&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; text-align:&nbsp;center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin-bottom:&nbsp;20px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .header&nbsp;h1&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;clamp(1.4rem,&nbsp;4vw,&nbsp;1.6rem);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-weight:&nbsp;700;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:&nbsp;linear-gradient(135deg,&nbsp;#FFE6B0,&nbsp;#FFC857);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background-clip:&nbsp;text;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; -webkit-background-clip:&nbsp;text;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:&nbsp;transparent;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .sub&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:&nbsp;#c0d4e8;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;0.82rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin-top:&nbsp;6px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:&nbsp;3px&nbsp;12px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-radius:&nbsp;30px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:&nbsp;rgba(0,0,0,0.3);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; display:&nbsp;inline-block;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; max-width:&nbsp;100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; overflow:&nbsp;hidden;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><br><div align="left">
- <span style="font-size:16">&nbsp; /*&nbsp;摄像头预览框&nbsp;*/</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .camera-box&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:&nbsp;100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; height:&nbsp;clamp(130px,&nbsp;22vw,&nbsp;160px);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:&nbsp;#000;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-radius:&nbsp;24px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; overflow:&nbsp;hidden;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin:10px&nbsp;0&nbsp;15px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border:1px&nbsp;solid&nbsp;#ffc85750;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; position:&nbsp;relative;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; #video&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; height:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; object-fit:&nbsp;cover;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; display:block;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .cam-tip&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; position:absolute;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; left:0;top:0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;height:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; display:flex;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; align-items:center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; justify-content:center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:#fff;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:0.8rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:rgba(0,0,0,0.6);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; /*&nbsp;阈值调节&nbsp;*/</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .set-row{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; display:flex;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; gap:10px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; flex-wrap:wrap;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin:12px&nbsp;0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .set-item{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; flex:1;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; min-width:130px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:#e0eefc;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:0.8rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .set-item&nbsp;input{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin-top:4px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .button-panel&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; display:&nbsp;flex;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; gap:&nbsp;12px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin:&nbsp;22px&nbsp;0&nbsp;16px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .action-btn&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; flex:&nbsp;1&nbsp;1&nbsp;45%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; min-height:&nbsp;90px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border:&nbsp;none;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:&nbsp;14px&nbsp;8px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-radius:&nbsp;40px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:&nbsp;#f9f3e2;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; display:&nbsp;flex;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; flex-direction:&nbsp;column;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; align-items:&nbsp;center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; justify-content:&nbsp;center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; gap:&nbsp;6px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; cursor:&nbsp;pointer;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; transition:&nbsp;0.18s&nbsp;ease;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; box-shadow:&nbsp;0&nbsp;7px&nbsp;0&nbsp;#0a1117;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; transform:&nbsp;translateY(-2px);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border:&nbsp;1px&nbsp;solid&nbsp;rgba(255,215,120,0.4);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .action-btn&nbsp;span:first-child&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;clamp(1.7rem,&nbsp;5vw,&nbsp;2rem);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .action-btn&nbsp;span:last-child&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;0.8rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; letter-spacing:&nbsp;0.5px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; line-height:&nbsp;1.3;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .action-btn:active&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; transform:&nbsp;translateY(3px);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; box-shadow:&nbsp;0&nbsp;3px&nbsp;0&nbsp;#0a1117;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .action-btn:disabled&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; opacity:&nbsp;0.55;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; transform:&nbsp;translateY(0);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; box-shadow:&nbsp;0&nbsp;4px&nbsp;0&nbsp;#0a1117;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; cursor:&nbsp;not-allowed;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; #lightningBtn&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:&nbsp;linear-gradient(135deg,&nbsp;#2c475c,&nbsp;#172e3b);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-bottom:&nbsp;2px&nbsp;solid&nbsp;#ffd966;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; #thunderBtn&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:&nbsp;linear-gradient(135deg,&nbsp;#2a4b3e,&nbsp;#1a332a);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-bottom:&nbsp;2px&nbsp;solid&nbsp;#ffaa44;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; #recordBtn{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin:8px&nbsp;0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:linear-gradient(135deg,#445977,#283b4d);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-bottom:2px&nbsp;solid&nbsp;#ffd072;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; min-height:54px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .status-area&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:&nbsp;#07121c80;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-radius:&nbsp;36px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:&nbsp;10px&nbsp;14px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin:&nbsp;16px&nbsp;0&nbsp;12px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; text-align:&nbsp;center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:&nbsp;#fbffd3;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;0.9rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border:&nbsp;1px&nbsp;solid&nbsp;#ffc85740;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .result-card&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:&nbsp;#0b1721e6;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-radius:&nbsp;30px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:&nbsp;16px&nbsp;14px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin:&nbsp;16px&nbsp;0&nbsp;14px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; box-shadow:&nbsp;inset&nbsp;0&nbsp;0&nbsp;6px&nbsp;#00a6ff20;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .result-line&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; display:&nbsp;flex;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; justify-content:&nbsp;space-between;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; align-items:&nbsp;center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:&nbsp;8px&nbsp;0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-bottom:&nbsp;1px&nbsp;dashed&nbsp;#3a5568;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; gap:&nbsp;8px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; flex-wrap:&nbsp;wrap;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .result-line:last-child&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-bottom:&nbsp;none;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .label&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:&nbsp;#bdd4e8;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;0.82rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .value&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;clamp(0.95rem,&nbsp;3vw,&nbsp;1.1rem);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:&nbsp;#FFE2A4;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-family:&nbsp;monospace;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; word-break:&nbsp;break-all;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; text-align:&nbsp;right;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .degree-value&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;1rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:&nbsp;3px&nbsp;8px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-radius:&nbsp;40px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:&nbsp;#ffb34720;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .warning-text&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin-top:&nbsp;10px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;0.78rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:&nbsp;7px&nbsp;10px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-radius:&nbsp;24px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; text-align:&nbsp;center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:&nbsp;#ffbc6e;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:&nbsp;#ff450030;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; line-height:&nbsp;1.4;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; footer&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; text-align:&nbsp;center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;0.65rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:&nbsp;#7a93aa;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin-top:&nbsp;18px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; line-height:&nbsp;1.4;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; /*&nbsp;记录弹窗样式&nbsp;*/</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .modal-mask{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; position:fixed;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; top:0;left:0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100vw;height:100vh;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:rgba(0,0,0,0.75);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; z-index:99;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; display:none;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; align-items:center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; justify-content:center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:15px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .modal-box{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; max-width:540px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; max-height:75vh;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:#12202e;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-radius:28px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:18px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; overflow:hidden;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; display:flex;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; flex-direction:column;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border:1px&nbsp;solid&nbsp;rgba(255,200,87,0.3);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .modal-title{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; text-align:center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:#ffe2a4;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:1.1rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding-bottom:12px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-bottom:1px&nbsp;solid&nbsp;#3a5568;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .record-list{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; flex:1;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; overflow-y:auto;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:10px&nbsp;0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .record-item{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:10px&nbsp;8px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-bottom:1px&nbsp;dashed&nbsp;#32495c;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:#d4e3f2;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:0.8rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; line-height:1.5;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .empty-tip{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; text-align:center;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:30px&nbsp;0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:#869cb3;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .close-modal{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; margin-top:12px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:11px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border:none;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; border-radius:30px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; background:#2c4053;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; color:#f0e5cf;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:0.95rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; /*&nbsp;小手机通用适配&nbsp;*/</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; @media&nbsp;(max-width:&nbsp;420px)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; body&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; padding:&nbsp;10px&nbsp;8px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .header&nbsp;h1&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;1.4rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .action-btn&nbsp;span:first-child&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;1.7rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .action-btn&nbsp;span:last-child&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;0.7rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .value&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; font-size:&nbsp;0.95rem;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .button-panel&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; gap:&nbsp;8px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .camera-box{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; height:130px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .action-btn&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; min-height:&nbsp;80px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; @media&nbsp;(max-width:&nbsp;320px)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .set-item&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; min-width:&nbsp;100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .button-panel&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; flex-direction:&nbsp;column;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; .action-btn&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; width:100%;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; min-height:70px;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/style&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;/head&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;body&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;div&nbsp;class="card"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="header"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;h1&gt;⚡&nbsp;智能雷暴测距仪&nbsp;🌩️&lt;/h1&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="sub"&gt;后置摄像头测光&nbsp;+&nbsp;麦克风收音&nbsp;自动计时测距&lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="principle"&gt;</span>
-</div><br><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="camera-box"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;video&nbsp;id="video"&nbsp;autoplay&nbsp;muted&nbsp;playsinline&gt;&lt;/video&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="cam-tip"&nbsp;id="camTip"&gt;启动摄像头中...&lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="set-row"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="set-item"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; 亮度阈值(闪电):&nbsp;&lt;span&nbsp;id="lightVal"&gt;100&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;input&nbsp;type="range"&nbsp;id="lightThresh"&nbsp;min="20"&nbsp;max="120"&nbsp;value="100"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="set-item"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; 音量阈值(雷声):&nbsp;&lt;span&nbsp;id="volVal"&gt;45&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;input&nbsp;type="range"&nbsp;id="volThresh"&nbsp;min="10"&nbsp;max="80"&nbsp;value="45"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;button&nbsp;class="action-btn"&nbsp;id="recordBtn"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&gt;📋&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&gt;查看测量记录列表&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/button&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="button-panel"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;button&nbsp;class="action-btn"&nbsp;id="lightningBtn"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&gt;⚡&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&gt;手动记录闪电&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/button&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;button&nbsp;class="action-btn"&nbsp;id="thunderBtn"&nbsp;disabled&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&gt;🌩️&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&gt;手动记录雷声&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/button&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="status-area"&nbsp;id="statusMsg"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; 🌐&nbsp;页面加载完毕，已自动开启雷电自动识别</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="result-card"&nbsp;id="resultArea"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="result-line"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&nbsp;class="label"&gt;⏱️&nbsp;时间差&nbsp;(闪电→雷声)&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&nbsp;class="value"&nbsp;id="timeDiffVal"&gt;—&nbsp;秒&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="result-line"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&nbsp;class="label"&gt;📏&nbsp;雷暴距离&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&nbsp;class="value"&nbsp;id="distanceVal"&gt;—&nbsp;km&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="result-line"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&nbsp;class="label"&gt;⚡&nbsp;雷的程度&nbsp;/&nbsp;强度评估&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;span&nbsp;class="value&nbsp;degree-value"&nbsp;id="degreeVal"&gt;⚡&nbsp;未测量&lt;/span&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;id="safetyMsg"&nbsp;class="warning-text"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; 💡&nbsp;自动模式对准窗外天空，亮度暴涨识别闪电；巨响识别雷声</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;footer&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; 声速343m/s；手机需授予相机麦克风权限；仅HTTPS/localhost可用</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/footer&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;!--&nbsp;记录弹窗&nbsp;--&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;div&nbsp;class="modal-mask"&nbsp;id="modalMask"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="modal-box"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="modal-title"&gt;雷电测量历史记录&lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="record-list"&nbsp;id="recordListBox"&gt;&lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;button&nbsp;class="close-modal"&nbsp;id="closeModalBtn"&gt;关闭弹窗&lt;/button&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;script&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; (function()&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;基础变量</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;startTimestamp&nbsp;=&nbsp;null;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;measuring&nbsp;=&nbsp;false;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;finished&nbsp;=&nbsp;false;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;SOUND_SPEED&nbsp;=&nbsp;343;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;autoMode&nbsp;=&nbsp;false;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;mediaStream&nbsp;=&nbsp;null;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;audioCtx&nbsp;=&nbsp;null;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;analyser&nbsp;=&nbsp;null;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;drawId&nbsp;=&nbsp;null;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;记录数组</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;recordList&nbsp;=&nbsp;[];</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;DOM</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;lightningBtn&nbsp;=&nbsp;document.getElementById('lightningBtn');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;thunderBtn&nbsp;=&nbsp;document.getElementById('thunderBtn');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;recordBtn&nbsp;=&nbsp;document.getElementById('recordBtn');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;statusMsgDiv&nbsp;=&nbsp;document.getElementById('statusMsg');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;timeDiffSpan&nbsp;=&nbsp;document.getElementById('timeDiffVal');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;distanceSpan&nbsp;=&nbsp;document.getElementById('distanceVal');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;degreeSpan&nbsp;=&nbsp;document.getElementById('degreeVal');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;safetyMsgDiv&nbsp;=&nbsp;document.getElementById('safetyMsg');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;video&nbsp;=&nbsp;document.getElementById('video');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;camTip&nbsp;=&nbsp;document.getElementById('camTip');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;lightThresh&nbsp;=&nbsp;document.getElementById('lightThresh');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;lightVal&nbsp;=&nbsp;document.getElementById('lightVal');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;volThresh&nbsp;=&nbsp;document.getElementById('volThresh');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;volVal&nbsp;=&nbsp;document.getElementById('volVal');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //弹窗DOM</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;modalMask&nbsp;=&nbsp;document.getElementById('modalMask');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;recordListBox&nbsp;=&nbsp;document.getElementById('recordListBox');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;closeModalBtn&nbsp;=&nbsp;document.getElementById('closeModalBtn');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;lightThreshold&nbsp;=&nbsp;Number(lightThresh.value);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;volThreshold&nbsp;=&nbsp;Number(volThresh.value);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;lastBrightness&nbsp;=&nbsp;0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;滑块监听</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; lightThresh.oninput&nbsp;=&nbsp;()=&gt;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; lightThreshold&nbsp;=&nbsp;Number(lightThresh.value);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; lightVal.innerText&nbsp;=&nbsp;lightThreshold;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; };</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; volThresh.oninput&nbsp;=&nbsp;()=&gt;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; volThreshold&nbsp;=&nbsp;Number(volThresh.value);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; volVal.innerText&nbsp;=&nbsp;volThreshold;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; };</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;弹窗开关</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; recordBtn.onclick&nbsp;=&nbsp;openRecordModal;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; closeModalBtn.onclick&nbsp;=&nbsp;()=&gt;&nbsp;modalMask.style.display&nbsp;=&nbsp;'none';</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;渲染记录列表</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; function&nbsp;openRecordModal(){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; modalMask.style.display&nbsp;=&nbsp;'flex';</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if(recordList.length&nbsp;===&nbsp;0){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; recordListBox.innerHTML&nbsp;=&nbsp;`&lt;div&nbsp;class="empty-tip"&gt;暂无测量记录，等待捕捉雷电数据&lt;/div&gt;`;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; return;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;html&nbsp;=&nbsp;"";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; recordList.forEach((item,idx)=&gt;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; html&nbsp;+=&nbsp;`</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;div&nbsp;class="record-item"&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; #${idx+1}</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;br/&gt;时差：${item.diff}&nbsp;|&nbsp;距离：${item.dist}</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;br/&gt;强度：${item.degree}</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; &lt;/div&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; `;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; });</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; recordListBox.innerHTML&nbsp;=&nbsp;html;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;状态提示</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; function&nbsp;updateStatusMessage(text,&nbsp;isError&nbsp;=&nbsp;false)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; statusMsgDiv.innerHTML&nbsp;=&nbsp;text;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if&nbsp;(isError)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; statusMsgDiv.style.background&nbsp;=&nbsp;"#a1281e80";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; setTimeout(()&nbsp;=&gt;&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if&nbsp;(statusMsgDiv.innerHTML&nbsp;===&nbsp;text)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if&nbsp;(!measuring&nbsp;&amp;&amp;&nbsp;!finished)&nbsp;statusMsgDiv.style.background&nbsp;=&nbsp;"#07121c80";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; else&nbsp;if&nbsp;(measuring)&nbsp;statusMsgDiv.style.background&nbsp;=&nbsp;"#2a582e80";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; else&nbsp;if&nbsp;(finished)&nbsp;statusMsgDiv.style.background&nbsp;=&nbsp;"#1f495e80";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; },&nbsp;1500);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }&nbsp;else&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if&nbsp;(measuring)&nbsp;statusMsgDiv.style.background&nbsp;=&nbsp;"#1f553080";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; else&nbsp;if&nbsp;(finished)&nbsp;statusMsgDiv.style.background&nbsp;=&nbsp;"#2c4c6680";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; else&nbsp;statusMsgDiv.style.background&nbsp;=&nbsp;"#07121c80";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;单次测量完成后自动重置</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; function&nbsp;autoReset(){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; startTimestamp&nbsp;=&nbsp;null;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; measuring&nbsp;=&nbsp;false;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; finished&nbsp;=&nbsp;false;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; lightningBtn.disabled&nbsp;=&nbsp;false;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; thunderBtn.disabled&nbsp;=&nbsp;true;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; timeDiffSpan.innerText&nbsp;=&nbsp;'—&nbsp;秒';</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; distanceSpan.innerText&nbsp;=&nbsp;'—&nbsp;km';</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; degreeSpan.innerHTML&nbsp;=&nbsp;'⚡&nbsp;等待下一次闪电';</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; safetyMsgDiv.innerHTML&nbsp;=&nbsp;'💡&nbsp;自动模式持续监测亮度与音量';</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; safetyMsgDiv.style.background&nbsp;=&nbsp;"#ff450030";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; updateStatusMessage("🌤️&nbsp;已自动重置，持续监听雷电信号");</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;雷暴等级判断</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; function&nbsp;evaluateThunderDegree(distanceMeters)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;distanceKm&nbsp;=&nbsp;distanceMeters&nbsp;/&nbsp;1000;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;degreeText&nbsp;=&nbsp;"";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;safetyTip&nbsp;=&nbsp;"";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if&nbsp;(distanceMeters&nbsp;&lt;&nbsp;1000)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; degreeText&nbsp;=&nbsp;"🔴&nbsp;极近雷暴&nbsp;—&nbsp;极度强烈！震耳欲聋";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; safetyTip&nbsp;=&nbsp;"⚠️&nbsp;极度危险！立即进入坚固建筑物内，远离窗户金属物！";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }&nbsp;else&nbsp;if&nbsp;(distanceMeters&nbsp;&lt;&nbsp;3000)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; degreeText&nbsp;=&nbsp;"🟠&nbsp;近程雷暴&nbsp;—&nbsp;非常强烈，雷声迅猛";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; safetyTip&nbsp;=&nbsp;"⚠️&nbsp;危险！雷暴接近，尽快躲入室内或车内";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }&nbsp;else&nbsp;if&nbsp;(distanceMeters&nbsp;&lt;&nbsp;10000)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; degreeText&nbsp;=&nbsp;"🟡&nbsp;中等距离雷暴&nbsp;—&nbsp;雷声清晰，强度中等";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; safetyTip&nbsp;=&nbsp;"⚡&nbsp;雷雨临近，做好防雷，远离空旷地带";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }&nbsp;else&nbsp;if&nbsp;(distanceMeters&nbsp;&lt;&nbsp;20000)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; degreeText&nbsp;=&nbsp;"🔵&nbsp;较远雷暴&nbsp;—&nbsp;雷声隐约，强度较弱";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; safetyTip&nbsp;=&nbsp;"🌧️&nbsp;雷暴较远，留意天气移动方向";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }&nbsp;else&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; degreeText&nbsp;=&nbsp;"⚪&nbsp;远距离雷暴&nbsp;—&nbsp;雷声微弱";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; safetyTip&nbsp;=&nbsp;"☁️&nbsp;雷电很远，暂时安全";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; return&nbsp;{&nbsp;degreeText,&nbsp;safetyTip&nbsp;};</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;计算、保存记录&nbsp;+&nbsp;自动重置</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; function&nbsp;calculateAndDisplay(endTimestamp)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if&nbsp;(!startTimestamp&nbsp;||&nbsp;finished)&nbsp;return&nbsp;false;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;deltaMs&nbsp;=&nbsp;endTimestamp&nbsp;-&nbsp;startTimestamp;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if&nbsp;(deltaMs&nbsp;&lt;&nbsp;0)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; updateStatusMessage("⚠️&nbsp;计时错误",&nbsp;true);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; return&nbsp;false;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;deltaSec&nbsp;=&nbsp;deltaMs&nbsp;/&nbsp;1000;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;distanceMeters&nbsp;=&nbsp;deltaSec&nbsp;*&nbsp;SOUND_SPEED;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;distanceKm&nbsp;=&nbsp;distanceMeters&nbsp;/&nbsp;1000;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;diffStr&nbsp;=&nbsp;`${deltaSec.toFixed(3)}&nbsp;秒`;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;distStr;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if&nbsp;(distanceKm&nbsp;&gt;=&nbsp;0.01)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; distStr&nbsp;=&nbsp;`${distanceKm.toFixed(2)}&nbsp;km&nbsp;(${Math.round(distanceMeters)}&nbsp;m)`;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }&nbsp;else&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; distStr&nbsp;=&nbsp;`${distanceMeters.toFixed(1)}&nbsp;m&nbsp;(极近)`;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; timeDiffSpan.innerText&nbsp;=&nbsp;diffStr;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; distanceSpan.innerText&nbsp;=&nbsp;distStr;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;{&nbsp;degreeText,&nbsp;safetyTip&nbsp;}&nbsp;=&nbsp;evaluateThunderDegree(distanceMeters);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; degreeSpan.innerHTML&nbsp;=&nbsp;`⚡&nbsp;${degreeText}`;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; safetyMsgDiv.innerHTML&nbsp;=&nbsp;`🛡️&nbsp;安全建议：${safetyTip}&nbsp;&nbsp;(距离:&nbsp;${distanceKm.toFixed(2)}km)`;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; safetyMsgDiv.style.background&nbsp;=&nbsp;distanceMeters&nbsp;&lt;&nbsp;3000&nbsp;?&nbsp;"#d1451f80"&nbsp;:&nbsp;(distanceMeters&lt;10000?"#da882a80":"#2f6b4780");</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; updateStatusMessage(`✅&nbsp;识别完成！时差${deltaSec.toFixed(2)}秒，距离${distanceKm.toFixed(2)}km`);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;存入记录列表</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; recordList.push({</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; diff:&nbsp;diffStr,</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; dist:&nbsp;distStr,</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; degree:&nbsp;degreeText</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; });</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; finished&nbsp;=&nbsp;true;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; measuring&nbsp;=&nbsp;false;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; lightningBtn.disabled&nbsp;=&nbsp;true;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; thunderBtn.disabled&nbsp;=&nbsp;true;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;延迟自动重置</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; setTimeout(()=&gt;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; autoReset();</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; },&nbsp;2200);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; return&nbsp;true;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;手动闪电</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; function&nbsp;onLightningClick()&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if&nbsp;(finished)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; updateStatusMessage("⚠️&nbsp;等待自动重置完成",&nbsp;true);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; return;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if&nbsp;(measuring)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; updateStatusMessage("⏳&nbsp;已记录闪电，等待雷声",&nbsp;true);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; return;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;now&nbsp;=&nbsp;Date.now();</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; startTimestamp&nbsp;=&nbsp;now;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; measuring&nbsp;=&nbsp;true;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; finished&nbsp;=&nbsp;false;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; lightningBtn.disabled&nbsp;=&nbsp;true;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; thunderBtn.disabled&nbsp;=&nbsp;false;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; updateStatusMessage("⚡&nbsp;手动记录闪电，等待雷声");</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; timeDiffSpan.innerText&nbsp;=&nbsp;'⏳&nbsp;测量中...';</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; distanceSpan.innerText&nbsp;=&nbsp;'等待雷声';</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; degreeSpan.innerHTML&nbsp;=&nbsp;'🌩️&nbsp;等待雷声信号';</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;手动雷声</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; function&nbsp;onThunderClick()&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if&nbsp;(!measuring&nbsp;||&nbsp;finished)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; updateStatusMessage("⚠️&nbsp;请先记录闪电",&nbsp;true);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; return;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; calculateAndDisplay(Date.now());</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;获取画面平均亮度</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; function&nbsp;getBrightness(videoEl)&nbsp;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;w&nbsp;=&nbsp;videoEl.videoWidth;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;h&nbsp;=&nbsp;videoEl.videoHeight;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if(!w&nbsp;||&nbsp;!h&nbsp;||&nbsp;videoEl.readyState&nbsp;&lt;&nbsp;2)&nbsp;return&nbsp;lastBrightness;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;canvas&nbsp;=&nbsp;document.createElement('canvas');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; canvas.width&nbsp;=&nbsp;w;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; canvas.height&nbsp;=&nbsp;h;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;ctx&nbsp;=&nbsp;canvas.getContext('2d');</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; ctx.drawImage(videoEl,0,0,w,h);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;imgData&nbsp;=&nbsp;ctx.getImageData(0,0,w,h);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;sum&nbsp;=&nbsp;0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;data&nbsp;=&nbsp;imgData.data;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; for(let&nbsp;i=0;i&lt;data.length;i+=4){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;r&nbsp;=&nbsp;data[i];</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;g&nbsp;=&nbsp;data[i+1];</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;b&nbsp;=&nbsp;data[i+2];</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; sum&nbsp;+=&nbsp;(r*0.299&nbsp;+&nbsp;g*0.587&nbsp;+&nbsp;b*0.114);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; return&nbsp;sum&nbsp;/&nbsp;(data.length/4);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;获取麦克风音量</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; function&nbsp;getVolume(){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if(!analyser)&nbsp;return&nbsp;0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;bufferLength&nbsp;=&nbsp;analyser.frequencyBinCount;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;dataArray&nbsp;=&nbsp;new&nbsp;Uint8Array(bufferLength);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; analyser.getByteFrequencyData(dataArray);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;sum&nbsp;=&nbsp;0;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; for(let&nbsp;i=0;i&lt;bufferLength;i++)&nbsp;sum&nbsp;+=&nbsp;dataArray[i];</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;avg&nbsp;=&nbsp;sum&nbsp;/&nbsp;bufferLength;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; return&nbsp;avg;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;自动循环检测</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; function&nbsp;autoLoop(){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if(!autoMode)&nbsp;return;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; drawId&nbsp;=&nbsp;requestAnimationFrame(autoLoop);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;bright&nbsp;=&nbsp;getBrightness(video);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; let&nbsp;volume&nbsp;=&nbsp;getVolume();</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if(!measuring&nbsp;&amp;&amp;&nbsp;!finished){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if(bright&nbsp;&gt;&nbsp;lastBrightness&nbsp;+&nbsp;lightThreshold){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; startTimestamp&nbsp;=&nbsp;Date.now();</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; measuring&nbsp;=&nbsp;true;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; updateStatusMessage("⚡&nbsp;摄像头检测到闪光（闪电），等待雷声...");</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; timeDiffSpan.innerText&nbsp;=&nbsp;"⏳&nbsp;识别雷声中";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; distanceSpan.innerText&nbsp;=&nbsp;"等待收音";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if(measuring&nbsp;&amp;&amp;&nbsp;!finished){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if(volume&nbsp;&gt;&nbsp;volThreshold){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; calculateAndDisplay(Date.now());</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; lastBrightness&nbsp;=&nbsp;bright;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;页面加载默认启动自动识别</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; async&nbsp;function&nbsp;startAutoDetect(){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; if(autoMode)&nbsp;return;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; try{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; mediaStream&nbsp;=&nbsp;await&nbsp;navigator.mediaDevices.getUserMedia({</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; video:{facingMode:'environment'},</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; audio:true</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; });</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; video.srcObject&nbsp;=&nbsp;mediaStream;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; camTip.style.display&nbsp;=&nbsp;'none';</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; autoMode&nbsp;=&nbsp;true;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; audioCtx&nbsp;=&nbsp;new&nbsp;(window.AudioContext&nbsp;||&nbsp;window.webkitAudioContext)();</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; const&nbsp;audioSrc&nbsp;=&nbsp;audioCtx.createMediaStreamSource(mediaStream);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; analyser&nbsp;=&nbsp;audioCtx.createAnalyser();</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; analyser.fftSize&nbsp;=&nbsp;256;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; audioSrc.connect(analyser);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; updateStatusMessage("✅&nbsp;相机、麦克风授权成功，自动识别运行中");</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; autoLoop();</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }catch(err){</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; console.error(err);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; camTip.innerText&nbsp;=&nbsp;"权限拒绝/浏览器不支持";</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; updateStatusMessage("❌&nbsp;权限失败：允许相机、麦克风；必须HTTPS",true);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; }</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;绑定手动按钮</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; lightningBtn.addEventListener('click',&nbsp;onLightningClick);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; thunderBtn.addEventListener('click',&nbsp;onThunderClick);</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; //&nbsp;页面载入自动开启识别</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; window.addEventListener('load',&nbsp;()=&gt;{</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; startAutoDetect();</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; });</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp; })();</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;/script&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;/body&gt;</span>
-</div><div align="left">
- <span style="font-size:16">&nbsp;&lt;/html&gt;</span>
-</div><p></p></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>智能雷暴测距仪 | 摄像头测光+麦克风收音自动测距</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background: linear-gradient(145deg, #1a2a3a 0%, #0f1a24 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: system-ui, -apple-system, Roboto, sans-serif;
+      padding: 15px 12px;
+    }
+    .card {
+      width: 100%;
+      max-width: 620px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 48px 36px;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+      padding: 22px 16px 30px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-size: clamp(1.4rem, 4vw, 1.6rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #FFE6B0, #FFC857);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .sub {
+      color: #c0d4e8;
+      font-size: 0.82rem;
+      margin-top: 6px;
+      padding: 3px 12px;
+      border-radius: 30px;
+      background: rgba(0,0,0,0.3);
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .camera-box {
+      width: 100%;
+      height: clamp(130px, 22vw, 160px);
+      background: #000;
+      border-radius: 24px;
+      overflow: hidden;
+      margin: 10px 0 15px;
+      border: 1px solid #ffc85750;
+      position: relative;
+    }
+    #video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cam-tip {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.8rem;
+      background: rgba(0,0,0,0.6);
+    }
+    .set-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+      width: 100%;
+    }
+    .set-item {
+      flex: 1;
+      min-width: 130px;
+      color: #e0eefc;
+      font-size: 0.8rem;
+    }
+    .set-item input {
+      width: 100%;
+      margin-top: 4px;
+    }
+    .button-panel {
+      display: flex;
+      gap: 12px;
+      margin: 22px 0 16px;
+      width: 100%;
+    }
+    .action-btn {
+      flex: 1 1 45%;
+      min-height: 90px;
+      border: none;
+      padding: 14px 8px;
+      border-radius: 40px;
+      color: #f9f3e2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: 0.18s ease;
+      box-shadow: 0 7px 0 #0a1117;
+      transform: translateY(-2px);
+      border: 1px solid rgba(255,215,120,0.4);
+    }
+    .action-btn span:first-child {
+      font-size: clamp(1.7rem, 5vw, 2rem);
+    }
+    .action-btn span:last-child {
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      line-height: 1.3;
+    }
+    .action-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 #0a1117;
+    }
+    .action-btn:disabled {
+      opacity: 0.55;
+      transform: translateY(0);
+      box-shadow: 0 4px 0 #0a1117;
+      cursor: not-allowed;
+    }
+    #lightningBtn {
+      background: linear-gradient(135deg, #2c475c, #172e3b);
+      border-bottom: 2px solid #ffd966;
+    }
+    #thunderBtn {
+      background: linear-gradient(135deg, #2a4b3e, #1a332a);
+      border-bottom: 2px solid #ffaa44;
+    }
+    #recordBtn {
+      width: 100%;
+      margin: 8px 0;
+      background: linear-gradient(135deg, #445977, #283b4d);
+      border-bottom: 2px solid #ffd072;
+      min-height: 54px;
+    }
+    .status-area {
+      background: #07121c80;
+      border-radius: 36px;
+      padding: 10px 14px;
+      margin: 16px 0 12px;
+      text-align: center;
+      color: #fbffd3;
+      font-size: 0.9rem;
+      border: 1px solid #ffc85740;
+      width: 100%;
+    }
+    .result-card {
+      background: #0b1721e6;
+      border-radius: 30px;
+      padding: 16px 14px;
+      margin: 16px 0 14px;
+      box-shadow: inset 0 0 6px #00a6ff20;
+      width: 100%;
+    }
+    .result-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px dashed #3a5568;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .result-line:last-child {
+      border-bottom: none;
+    }
+    .label {
+      color: #bdd4e8;
+      font-size: 0.82rem;
+    }
+    .value {
+      font-size: clamp(0.95rem, 3vw, 1.1rem);
+      color: #FFE2A4;
+      font-family: monospace;
+      word-break: break-all;
+      text-align: right;
+    }
+    .degree-value {
+      font-size: 1rem;
+      padding: 3px 8px;
+      border-radius: 40px;
+      background: #ffb34720;
+    }
+    .warning-text {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      padding: 7px 10px;
+      border-radius: 24px;
+      text-align: center;
+      color: #ffbc6e;
+      background: #ff450030;
+      line-height: 1.4;
+      width: 100%;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.65rem;
+      color: #7a93aa;
+      margin-top: 18px;
+      line-height: 1.4;
+      width: 100%;
+    }
+    .modal-mask {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.75);
+      z-index: 99;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+    .modal-box {
+      width: 100%;
+      max-width: 540px;
+      max-height: 75vh;
+      background: #12202e;
+      border-radius: 28px;
+      padding: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255,200,87,0.3);
+    }
+    .modal-title {
+      text-align: center;
+      color: #ffe2a4;
+      font-size: 1.1rem;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #3a5568;
+    }
+    .record-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 0;
+    }
+    .record-item {
+      padding: 10px 8px;
+      border-bottom: 1px dashed #32495c;
+      color: #d4e3f2;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+    .empty-tip {
+      text-align: center;
+      padding: 30px 0;
+      color: #869cb3;
+    }
+    .close-modal {
+      margin-top: 12px;
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 30px;
+      background: #2c4053;
+      color: #f0e5cf;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 420px) {
+      body {
+        padding: 10px 8px;
+      }
+      .header h1 {
+        font-size: 1.4rem;
+      }
+      .action-btn span:first-child {
+        font-size: 1.7rem;
+      }
+      .action-btn span:last-child {
+        font-size: 0.7rem;
+      }
+      .value {
+        font-size: 0.95rem;
+      }
+      .button-panel {
+        gap: 8px;
+      }
+      .camera-box {
+        height: 130px;
+      }
+      .action-btn {
+        min-height: 80px;
+      }
+    }
+    @media (max-width: 320px) {
+      .set-item {
+        min-width: 100%;
+      }
+      .button-panel {
+        flex-direction: column;
+      }
+      .action-btn {
+        width: 100%;
+        min-height: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>⚡ 智能雷暴测距仪 🌩️</h1>
+      <div class="sub">后置摄像头测光 + 麦克风收音 自动计时测距</div>
+    </div>
+    <div class="camera-box">
+      <video id="video" autoplay muted playsinline></video>
+      <div class="cam-tip" id="camTip">启动摄像头中...</div>
+    </div>
+    <div class="set-row">
+      <div class="set-item">
+        亮度阈值(闪电): <span id="lightVal">100</span>
+        <input type="range" id="lightThresh" min="20" max="120" value="100">
+      </div>
+      <div class="set-item">
+        音量阈值(雷声): <span id="volVal">45</span>
+        <input type="range" id="volThresh" min="10" max="80" value="45">
+      </div>
+    </div>
+    <button class="action-btn" id="recordBtn">
+      <span>📋</span>
+      <span>查看测量记录列表</span>
+    </button>
+    <div class="button-panel">
+      <button class="action-btn" id="lightningBtn">
+        <span>⚡</span>
+        <span>手动记录闪电</span>
+      </button>
+      <button class="action-btn" id="thunderBtn" disabled>
+        <span>🌩️</span>
+        <span>手动记录雷声</span>
+      </button>
+    </div>
+    <div class="status-area" id="statusMsg">
+      🌐 页面加载完毕，已自动开启雷电自动识别
+    </div>
+    <div class="result-card" id="resultArea">
+      <div class="result-line">
+        <span class="label">⏱️ 时间差 (闪电→雷声)</span>
+        <span class="value" id="timeDiffVal">— 秒</span>
+      </div>
+      <div class="result-line">
+        <span class="label">📏 雷暴距离</span>
+        <span class="value" id="distanceVal">— km</span>
+      </div>
+      <div class="result-line">
+        <span class="label">⚡ 雷的程度 / 强度评估</span>
+        <span class="value degree-value" id="degreeVal">⚡ 未测量</span>
+      </div>
+      <div id="safetyMsg" class="warning-text">
+        💡 自动模式对准窗外天空，亮度暴涨识别闪电；巨响识别雷声
+      </div>
+    </div>
+    <footer>
+      声速343m/s；手机需授予相机麦克风权限；仅HTTPS/localhost可用
+    </footer>
+  </div>
+
+  <!-- 记录弹窗 -->
+  <div class="modal-mask" id="modalMask">
+    <div class="modal-box">
+      <div class="modal-title">雷电测量历史记录</div>
+      <div class="record-list" id="recordListBox"></div>
+      <button class="close-modal" id="closeModalBtn">关闭弹窗</button>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // 基础变量
+      let startTimestamp = null;
+      let measuring = false;
+      let finished = false;
+      const SOUND_SPEED = 343;
+      let autoMode = false;
+      let mediaStream = null;
+      let audioCtx = null;
+      let analyser = null;
+      let drawId = null;
+      let recordList = [];
+
+      // DOM
+      const lightningBtn = document.getElementById('lightningBtn');
+      const thunderBtn = document.getElementById('thunderBtn');
+      const recordBtn = document.getElementById('recordBtn');
+      const statusMsgDiv = document.getElementById('statusMsg');
+      const timeDiffSpan = document.getElementById('timeDiffVal');
+      const distanceSpan = document.getElementById('distanceVal');
+      const degreeSpan = document.getElementById('degreeVal');
+      const safetyMsgDiv = document.getElementById('safetyMsg');
+      const video = document.getElementById('video');
+      const camTip = document.getElementById('camTip');
+      const lightThresh = document.getElementById('lightThresh');
+      const lightVal = document.getElementById('lightVal');
+      const volThresh = document.getElementById('volThresh');
+      const volVal = document.getElementById('volVal');
+      const modalMask = document.getElementById('modalMask');
+      const recordListBox = document.getElementById('recordListBox');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+
+      let lightThreshold = Number(lightThresh.value);
+      let volThreshold = Number(volThresh.value);
+      let lastBrightness = 0;
+
+      // 滑块监听
+      lightThresh.oninput = () => {
+        lightThreshold = Number(lightThresh.value);
+        lightVal.innerText = lightThreshold;
+      };
+      volThresh.oninput = () => {
+        volThreshold = Number(volThresh.value);
+        volVal.innerText = volThreshold;
+      };
+
+      // 弹窗开关
+      recordBtn.onclick = openRecordModal;
+      closeModalBtn.onclick = () => modalMask.style.display = 'none';
+
+      // 渲染记录列表
+      function openRecordModal() {
+        modalMask.style.display = 'flex';
+        if (recordList.length === 0) {
+          recordListBox.innerHTML = `<div class="empty-tip">暂无测量记录，等待捕捉雷电数据</div>`;
+          return;
+        }
+        let html = "";
+        recordList.forEach((item, idx) => {
+          html += `
+            <div class="record-item">
+              #${idx+1}
+              <br/>时差：${item.diff} | 距离：${item.dist}
+              <br/>强度：${item.degree}
+            </div>
+          `;
+        });
+        recordListBox.innerHTML = html;
+      }
+
+      // 状态提示
+      function updateStatusMessage(text, isError = false) {
+        statusMsgDiv.innerHTML = text;
+        if (isError) {
+          statusMsgDiv.style.background = "#a1281e80";
+          setTimeout(() => {
+            if (statusMsgDiv.innerHTML === text) {
+              if (!measuring && !finished) statusMsgDiv.style.background = "#07121c80";
+              else if (measuring) statusMsgDiv.style.background = "#2a582e80";
+              else if (finished) statusMsgDiv.style.background = "#1f495e80";
+            }
+          }, 1500);
+        } else {
+          if (measuring) statusMsgDiv.style.background = "#1f553080";
+          else if (finished) statusMsgDiv.style.background = "#2c4c6680";
+          else statusMsgDiv.style.background = "#07121c80";
+        }
+      }
+
+      // 单次测量完成后自动重置
+      function autoReset() {
+        startTimestamp = null;
+        measuring = false;
+        finished = false;
+        lightningBtn.disabled = false;
+        thunderBtn.disabled = true;
+        timeDiffSpan.innerText = '— 秒';
+        distanceSpan.innerText = '— km';
+        degreeSpan.innerHTML = '⚡ 等待下一次闪电';
+        safetyMsgDiv.innerHTML = '💡 自动模式持续监测亮度与音量';
+        safetyMsgDiv.style.background = "#ff450030";
+        updateStatusMessage("🌤️ 已自动重置，持续监听雷电信号");
+      }
+
+      // 雷暴等级判断
+      function evaluateThunderDegree(distanceMeters) {
+        const distanceKm = distanceMeters / 1000;
+        let degreeText = "";
+        let safetyTip = "";
+        if (distanceMeters < 1000) {
+          degreeText = "🔴 极近雷暴 — 极度强烈！震耳欲聋";
+          safetyTip = "⚠️ 极度危险！立即进入坚固建筑物内，远离窗户金属物！";
+        } else if (distanceMeters < 3000) {
+          degreeText = "🟠 近距雷暴 — 很强";
+          safetyTip = "⚠️ 危险！停止户外活动，立即进入室内避雨。";
+        } else if (distanceMeters < 10000) {
+          degreeText = "🟡 中距雷暴 — 中等强度";
+          safetyTip = "⚠️ 注意！减少户外活动，密切监测天气变化。";
+        } else if (distanceMeters < 25000) {
+          degreeText = "🟢 远距雷暴 — 弱";
+          safetyTip = "✓ 雷暴较远，暂无直接威胁，但仍需持续观察。";
+        } else {
+          degreeText = "🔵 极远雷暴 — 很弱";
+          safetyTip = "✓ 雷暴很远，安全。可正常户外活动。";
+        }
+        return { degreeText, safetyTip };
+      }
+
+      // 初始化摄像头和麦克风
+      async function init() {
+        try {
+          mediaStream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'environment' },
+            audio: true
+          });
+          video.srcObject = mediaStream;
+          camTip.style.display = 'none';
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          analyser = audioCtx.createAnalyser();
+          const source = audioCtx.createMediaStreamSource(mediaStream);
+          source.connect(analyser);
+          analyser.fftSize = 2048;
+          startAutoDetection();
+          updateStatusMessage("✅ 摄像头和麦克风已就绪，自动检测启动");
+        } catch (err) {
+          updateStatusMessage("❌ 无法获取摄像头/麦克风权限", true);
+          console.error(err);
+        }
+      }
+
+      // 自动检测亮度和音量
+      function startAutoDetection() {
+        if (drawId) cancelAnimationFrame(drawId);
+
+        function detect() {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          ctx.drawImage(video, 0, 0);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imageData.data;
+          let sum = 0;
+          for (let i = 0; i < data.length; i += 4) {
+            sum += data[i] + data[i + 1] + data[i + 2];
+          }
+          const brightness = sum / (data.length / 4) / 255;
+
+          const dataArray = new Uint8Array(analyser.frequencyBinCount);
+          analyser.getByteFrequencyData(dataArray);
+          const volume = dataArray.reduce((a, b) => a + b) / dataArray.length / 255;
+
+          if (measuring) {
+            if (volume > volThreshold / 100) {
+              const timeDiff = (Date.now() - startTimestamp) / 1000;
+              const distance = timeDiff * SOUND_SPEED;
+              const { degreeText, safetyTip } = evaluateThunderDegree(distance);
+
+              timeDiffSpan.innerText = timeDiff.toFixed(2) + ' 秒';
+              distanceSpan.innerText = (distance / 1000).toFixed(2) + ' km';
+              degreeSpan.innerHTML = degreeText;
+              safetyMsgDiv.innerHTML = safetyTip;
+
+              recordList.push({
+                diff: timeDiff.toFixed(2) + 's',
+                dist: (distance / 1000).toFixed(2) + 'km',
+                degree: degreeText
+              });
+
+              finished = true;
+              measuring = false;
+              thunderBtn.disabled = true;
+
+              setTimeout(autoReset, 3000);
+            }
+          } else if (!finished && brightness - lastBrightness > lightThreshold / 100) {
+            startTimestamp = Date.now();
+            measuring = true;
+            thunderBtn.disabled = false;
+            updateStatusMessage("⚡ 检测到闪电！等待雷声...");
+          }
+
+          lastBrightness = brightness;
+          drawId = requestAnimationFrame(detect);
+        }
+        detect();
+      }
+
+      // 手动记录闪电
+      lightningBtn.onclick = () => {
+        startTimestamp = Date.now();
+        measuring = true;
+        lightningBtn.disabled = true;
+        thunderBtn.disabled = false;
+        updateStatusMessage("⚡ 已记录闪电，等待您手动记录雷声或自动检测");
+      };
+
+      // 手动记录雷声
+      thunderBtn.onclick = () => {
+        if (measuring && startTimestamp) {
+          const timeDiff = (Date.now() - startTimestamp) / 1000;
+          const distance = timeDiff * SOUND_SPEED;
+          const { degreeText, safetyTip } = evaluateThunderDegree(distance);
+
+          timeDiffSpan.innerText = timeDiff.toFixed(2) + ' 秒';
+          distanceSpan.innerText = (distance / 1000).toFixed(2) + ' km';
+          degreeSpan.innerHTML = degreeText;
+          safetyMsgDiv.innerHTML = safetyTip;
+
+          recordList.push({
+            diff: timeDiff.toFixed(2) + 's',
+            dist: (distance / 1000).toFixed(2) + 'km',
+            degree: degreeText
+          });
+
+          finished = true;
+          measuring = false;
+          thunderBtn.disabled = true;
+
+          setTimeout(autoReset, 3000);
+        }
+      };
+
+      // 初始化
+      init();
+    })();
+  </script>
+</body>
+</html>
