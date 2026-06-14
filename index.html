@@ -1,12 +1,464 @@
-<!doctype html>
-<html lang="zh-Hant">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0;url=/lighting.html">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Lighting — 重新導向</title>
-  </head>
-  <body>
-    正在跳轉到遊戲… 若未自動跳轉，請點選： <a href="/lighting.html">前往遊戲</a>
-  </body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>智能雷暴测距仪 | 摄像头测光+麦克风收音自动测距</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background: linear-gradient(145deg, #1a2a3a 0%, #0f1a24 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: system-ui, -apple-system, Roboto, sans-serif;
+      padding: 15px 12px;
+    }
+    .card {
+      width: 100%;
+      max-width: 620px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 48px 36px;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+      padding: 22px 16px 30px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-size: clamp(1.4rem, 4vw, 1.6rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #FFE6B0, #FFC857);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .sub {
+      color: #c0d4e8;
+      font-size: 0.82rem;
+      margin-top: 6px;
+      padding: 3px 12px;
+      border-radius: 30px;
+      background: rgba(0,0,0,0.3);
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .camera-box {
+      width: 100%;
+      height: clamp(130px, 22vw, 160px);
+      background: #000;
+      border-radius: 24px;
+      overflow: hidden;
+      margin: 10px 0 15px;
+      border: 1px solid #ffc85750;
+      position: relative;
+    }
+    #video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cam-tip {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.8rem;
+      background: rgba(0,0,0,0.6);
+    }
+    .set-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+      width: 100%;
+    }
+    .set-item {
+      flex: 1;
+      min-width: 130px;
+      color: #e0eefc;
+      font-size: 0.8rem;
+    }
+    .set-item input {
+      width: 100%;
+      margin-top: 4px;
+    }
+    .button-panel {
+      display: flex;
+      gap: 12px;
+      margin: 22px 0 16px;
+      width: 100%;
+    }
+    .action-btn {
+      flex: 1 1 45%;
+      min-height: 90px;
+      border: none;
+      padding: 14px 8px;
+      border-radius: 40px;
+      color: #f9f3e2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: 0.18s ease;
+      box-shadow: 0 7px 0 #0a1117;
+      transform: translateY(-2px);
+      border: 1px solid rgba(255,215,120,0.4);
+    }
+    .action-btn span:first-child {
+      font-size: clamp(1.7rem, 5vw, 2rem);
+    }
+    .action-btn span:last-child {
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      line-height: 1.3;
+    }
+    .action-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 #0a1117;
+    }
+    .action-btn:disabled {
+      opacity: 0.55;
+      transform: translateY(0);
+      box-shadow: 0 4px 0 #0a1117;
+      cursor: not-allowed;
+    }
+    #lightningBtn {
+      background: linear-gradient(135deg, #2c475c, #172e3b);
+      border-bottom: 2px solid #ffd966;
+    }
+    #thunderBtn {
+      background: linear-gradient(135deg, #2a4b3e, #1a332a);
+      border-bottom: 2px solid #ffaa44;
+    }
+    #recordBtn {
+      width: 100%;
+      margin: 8px 0;
+      background: linear-gradient(135deg, #445977, #283b4d);
+      border-bottom: 2px solid #ffd072;
+      min-height: 54px;
+    }
+    .status-area {
+      background: #07121c80;
+      border-radius: 36px;
+      padding: 10px 14px;
+      margin: 16px 0 12px;
+      text-align: center;
+      color: #fbffd3;
+      font-size: 0.9rem;
+      border: 1px solid #ffc85740;
+      width: 100%;
+    }
+    .result-card {
+      background: #0b1721e6;
+      border-radius: 30px;
+      padding: 16px 14px;
+      margin: 16px 0 14px;
+      box-shadow: inset 0 0 6px #00a6ff20;
+      width: 100%;
+    }
+    .result-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px dashed #3a5568;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .result-line:last-child {
+      border-bottom: none;
+    }
+    .label {
+      color: #bdd4e8;
+      font-size: 0.82rem;
+    }
+    .value {
+      font-size: clamp(0.95rem, 3vw, 1.1rem);
+      color: #FFE2A4;
+      font-family: monospace;
+      word-break: break-all;
+      text-align: right;
+    }
+    .degree-value {
+      font-size: 1rem;
+      padding: 3px 8px;
+      border-radius: 40px;
+      background: #ffb34720;
+    }
+    .warning-text {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      padding: 7px 10px;
+      border-radius: 24px;
+      text-align: center;
+      color: #ffbc6e;
+      background: #ff450030;
+      line-height: 1.4;
+      width: 100%;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.65rem;
+      color: #7a93aa;
+      margin-top: 18px;
+      line-height: 1.4;
+      width: 100%;
+    }
+    .modal-mask {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.75);
+      z-index: 99;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+    .modal-box {
+      width: 100%;
+      max-width: 540px;
+      max-height: 75vh;
+      background: #12202e;
+      border-radius: 28px;
+      padding: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255,200,87,0.3);
+    }
+    .modal-title {
+      text-align: center;
+      color: #ffe2a4;
+      font-size: 1.1rem;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #3a5568;
+    }
+    .record-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 0;
+    }
+    .record-item {
+      padding: 10px 8px;
+      border-bottom: 1px dashed #32495c;
+      color: #d4e3f2;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+    .empty-tip {
+      text-align: center;
+      padding: 30px 0;
+      color: #869cb3;
+    }
+    .close-modal {
+      margin-top: 12px;
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 30px;
+      background: #2c4053;
+      color: #f0e5cf;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    @media (max-width: 420px) {
+      body { padding: 10px 8px; }
+      .header h1 { font-size: 1.4rem; }
+      .action-btn span:first-child { font-size: 1.7rem; }
+      .action-btn span:last-child { font-size: 0.7rem; }
+      .value { font-size: 0.95rem; }
+      .button-panel { gap: 8px; }
+      .camera-box { height: 130px; }
+      .action-btn { min-height: 80px; }
+    }
+    @media (max-width: 320px) {
+      .set-item { min-width: 100%; }
+      .button-panel { flex-direction: column; }
+      .action-btn { width: 100%; min-height: 70px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>⚡ 智能雷暴测距仪 🌩️</h1>
+      <div class="sub">后置摄像头测光 + 麦克风收音 自动计时测距</div>
+    </div>
+    <div class="camera-box">
+      <video id="video" autoplay muted playsinline></video>
+      <div class="cam-tip" id="camTip">启动摄像头中...</div>
+    </div>
+    <div class="set-row">
+      <div class="set-item">
+        亮度阈值(闪电): <span id="lightVal">100</span>
+        <input type="range" id="lightThresh" min="20" max="120" value="100">
+      </div>
+      <div class="set-item">
+        音量阈值(雷声): <span id="volVal">45</span>
+        <input type="range" id="volThresh" min="10" max="80" value="45">
+      </div>
+    </div>
+    <button class="action-btn" id="recordBtn">
+      <span>📋</span>
+      <span>查看测量记录列表</span>
+    </button>
+    <div class="button-panel">
+      <button class="action-btn" id="lightningBtn">
+        <span>⚡</span>
+        <span>手动记录闪电</span>
+      </button>
+      <button class="action-btn" id="thunderBtn" disabled>
+        <span>🌩️</span>
+        <span>手动记录雷声</span>
+      </button>
+    </div>
+    <div class="status-area" id="statusMsg">
+      🌐 页面加载完毕，已自动开启雷电自动识别
+    </div>
+    <div class="result-card" id="resultArea">
+      <div class="result-line">
+        <span class="label">⏱️ 时间差 (闪电→雷声)</span>
+        <span class="value" id="timeDiffVal">— 秒</span>
+      </div>
+      <div class="result-line">
+        <span class="label">📏 雷暴距离</span>
+        <span class="value" id="distanceVal">— km</span>
+      </div>
+      <div class="result-line">
+        <span class="label">⚡ 雷的程度 / 强度评估</span>
+        <span class="value degree-value" id="degreeVal">⚡ 未测量</span>
+      </div>
+      <div id="safetyMsg" class="warning-text">
+        💡 自动模式对准窗外天空，亮度暴涨识别闪电；巨响识别雷声
+      </div>
+    </div>
+    <footer>
+      声速343m/s；手机需授予相机麦克风权限；仅HTTPS/localhost可用
+    </footer>
+  </div>
+  <div class="modal-mask" id="modalMask">
+    <div class="modal-box">
+      <div class="modal-title">雷电测量历史记录</div>
+      <div class="record-list" id="recordListBox"></div>
+      <button class="close-modal" id="closeModalBtn">关闭弹窗</button>
+    </div>
+  </div>
+  <script>
+    (function() {
+      let startTimestamp = null, measuring = false, finished = false, autoMode = false, mediaStream = null, audioCtx = null, analyser = null, drawId = null, recordList = [], lightThreshold = 100, volThreshold = 45, lastBrightness = 0;
+      const SOUND_SPEED = 343;
+      const lightningBtn = document.getElementById('lightningBtn'), thunderBtn = document.getElementById('thunderBtn'), recordBtn = document.getElementById('recordBtn'), statusMsgDiv = document.getElementById('statusMsg'), timeDiffSpan = document.getElementById('timeDiffVal'), distanceSpan = document.getElementById('distanceVal'), degreeSpan = document.getElementById('degreeVal'), safetyMsgDiv = document.getElementById('safetyMsg'), video = document.getElementById('video'), camTip = document.getElementById('camTip'), lightThresh = document.getElementById('lightThresh'), lightVal = document.getElementById('lightVal'), volThresh = document.getElementById('volThresh'), volVal = document.getElementById('volVal'), modalMask = document.getElementById('modalMask'), recordListBox = document.getElementById('recordListBox'), closeModalBtn = document.getElementById('closeModalBtn');
+      lightThresh.oninput = () => { lightThreshold = Number(lightThresh.value); lightVal.innerText = lightThreshold; };
+      volThresh.oninput = () => { volThreshold = Number(volThresh.value); volVal.innerText = volThreshold; };
+      recordBtn.onclick = openRecordModal;
+      closeModalBtn.onclick = () => modalMask.style.display = 'none';
+      function openRecordModal() {
+        modalMask.style.display = 'flex';
+        if (recordList.length === 0) { recordListBox.innerHTML = `<div class="empty-tip">暂无测量记录，等待捕捉雷电数据</div>`; return; }
+        let html = "";
+        recordList.forEach((item, idx) => { html += `<div class="record-item">#${idx+1}<br/>时差：${item.diff} | 距离：${item.dist}<br/>强度：${item.degree}</div>`; });
+        recordListBox.innerHTML = html;
+      }
+      function updateStatusMessage(text, isError = false) {
+        statusMsgDiv.innerHTML = text;
+        if (isError) {
+          statusMsgDiv.style.background = "#a1281e80";
+          setTimeout(() => { if (statusMsgDiv.innerHTML === text) { statusMsgDiv.style.background = !measuring && !finished ? "#07121c80" : measuring ? "#2a582e80" : "#1f495e80"; } }, 1500);
+        } else { statusMsgDiv.style.background = measuring ? "#1f553080" : finished ? "#2c4c6680" : "#07121c80"; }
+      }
+      function autoReset() {
+        startTimestamp = null; measuring = false; finished = false; lightningBtn.disabled = false; thunderBtn.disabled = true; timeDiffSpan.innerText = '— 秒'; distanceSpan.innerText = '— km'; degreeSpan.innerHTML = '⚡ 等待下一次闪电'; safetyMsgDiv.innerHTML = '💡 自动模式持续监测亮度与音量'; safetyMsgDiv.style.background = "#ff450030"; updateStatusMessage("🌤️ 已自动重置，持续监听雷电信号");
+      }
+      function evaluateThunderDegree(distanceMeters) {
+        let degreeText = "", safetyTip = "";
+        if (distanceMeters < 1000) { degreeText = "🔴 极近雷暴"; safetyTip = "⚠️ 极度危险"; }
+        else if (distanceMeters < 3000) { degreeText = "🟠 近距雷暴"; safetyTip = "⚠️ 危险"; }
+        else if (distanceMeters < 10000) { degreeText = "🟡 中距雷暴"; safetyTip = "⚠️ 注意"; }
+        else if (distanceMeters < 25000) { degreeText = "🟢 远距雷暴"; safetyTip = "✓ 较安全"; }
+        else { degreeText = "🔵 极远雷暴"; safetyTip = "✓ 安全"; }
+        return { degreeText, safetyTip };
+      }
+      async function init() {
+        try {
+          mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: true });
+          video.srcObject = mediaStream; camTip.style.display = 'none';
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          analyser = audioCtx.createAnalyser();
+          const source = audioCtx.createMediaStreamSource(mediaStream);
+          source.connect(analyser);
+          analyser.fftSize = 2048;
+          startAutoDetection();
+          updateStatusMessage("✅ 摄像头和麦克风已就绪");
+        } catch (err) { updateStatusMessage("❌ 无法获取权限", true); }
+      }
+      function startAutoDetection() {
+        if (drawId) cancelAnimationFrame(drawId);
+        function detect() {
+          const canvas = document.createElement('canvas'), ctx = canvas.getContext('2d');
+          canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+          ctx.drawImage(video, 0, 0);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height), data = imageData.data;
+          let sum = 0;
+          for (let i = 0; i < data.length; i += 4) sum += data[i] + data[i + 1] + data[i + 2];
+          const brightness = sum / (data.length / 4) / 255;
+          const dataArray = new Uint8Array(analyser.frequencyBinCount);
+          analyser.getByteFrequencyData(dataArray);
+          const volume = dataArray.reduce((a, b) => a + b) / dataArray.length / 255;
+          if (measuring && volume > volThreshold / 100) {
+            const timeDiff = (Date.now() - startTimestamp) / 1000, distance = timeDiff * SOUND_SPEED, { degreeText, safetyTip } = evaluateThunderDegree(distance);
+            timeDiffSpan.innerText = timeDiff.toFixed(2) + ' 秒';
+            distanceSpan.innerText = (distance / 1000).toFixed(2) + ' km';
+            degreeSpan.innerHTML = degreeText;
+            safetyMsgDiv.innerHTML = safetyTip;
+            recordList.push({ diff: timeDiff.toFixed(2) + 's', dist: (distance / 1000).toFixed(2) + 'km', degree: degreeText });
+            finished = true; measuring = false; thunderBtn.disabled = true;
+            setTimeout(autoReset, 3000);
+          } else if (!finished && brightness - lastBrightness > lightThreshold / 100) {
+            startTimestamp = Date.now(); measuring = true; thunderBtn.disabled = false; updateStatusMessage("⚡ 检测到闪电");
+          }
+          lastBrightness = brightness;
+          drawId = requestAnimationFrame(detect);
+        }
+        detect();
+      }
+      lightningBtn.onclick = () => { startTimestamp = Date.now(); measuring = true; lightningBtn.disabled = true; thunderBtn.disabled = false; updateStatusMessage("⚡ 已记录闪电"); };
+      thunderBtn.onclick = () => {
+        if (measuring && startTimestamp) {
+          const timeDiff = (Date.now() - startTimestamp) / 1000, distance = timeDiff * SOUND_SPEED, { degreeText, safetyTip } = evaluateThunderDegree(distance);
+          timeDiffSpan.innerText = timeDiff.toFixed(2) + ' 秒';
+          distanceSpan.innerText = (distance / 1000).toFixed(2) + ' km';
+          degreeSpan.innerHTML = degreeText;
+          safetyMsgDiv.innerHTML = safetyTip;
+          recordList.push({ diff: timeDiff.toFixed(2) + 's', dist: (distance / 1000).toFixed(2) + 'km', degree: degreeText });
+          finished = true; measuring = false; thunderBtn.disabled = true;
+          setTimeout(autoReset, 3000);
+        }
+      };
+      init();
+    })();
+  </script>
+</body>
 </html>
